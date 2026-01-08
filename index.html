@@ -3,68 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gyrus & IWS - LIVE CLOUD PORTAL V17.6</title>
+    <title>Gyrus & IWS - LIVE CLOUD PORTAL V17.7</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; margin: 0; padding: 20px; font-size: 16px; }
-        .main-wrapper { max-width: 1750px; margin: 0 auto; }
-        .sync-header { background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px; padding: 15px 25px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .status-on { color: #10b981; font-weight: 900; letter-spacing: 1px; }
-        .section-divider { width: 100%; text-align: center; margin: 40px 0 20px 0; border-bottom: 3px solid #fbbf24; line-height: 0.1em; }
-        .section-divider span { background: #0f172a; padding: 0 20px; color: #fbbf24; font-weight: 900; text-transform: uppercase; font-size: 22px; }
-        .dual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
-        .co-frame { background: #f8fafc; color: #1e293b; border-radius: 15px; padding: 25px; border-top: 8px solid #fbbf24; box-shadow: 0 10px 15px rgba(0,0,0,0.3); }
-        .co-header { text-align: center; background: #1e293b; color: #fbbf24; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-weight: 800; font-size: 20px; }
-        .cf-section { background: #fff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
-        .cf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
-        input[type="text"].amt-input { width: 160px; padding: 10px; border: 2px solid #cbd5e1; border-radius: 6px; text-align: right; font-weight: 900; font-family: monospace; font-size: 18px; color: #0f172a; }
-        .res-grand { background: #1e293b; color: #fbbf24; text-align: center; border: 2px solid #fbbf24; padding: 20px; border-radius: 10px; font-size: 32px; font-family: monospace; }
-        .btn-add { background: #1e293b; color: #fbbf24; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        select, .date-picker { padding: 8px; border-radius: 6px; border: 2px solid #cbd5e1; font-weight: bold; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; margin: 0; padding: 20px; font-size: 14px; }
+        .main-wrapper { max-width: 1600px; margin: 0 auto; }
+        .sync-header { background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .section-divider { width: 100%; text-align: center; margin: 30px 0 15px 0; border-bottom: 3px solid #fbbf24; line-height: 0.1em; }
+        .section-divider span { background: #0f172a; padding: 0 15px; color: #fbbf24; font-weight: 900; text-transform: uppercase; font-size: 18px; }
+        .dual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .co-frame { background: #f8fafc; color: #1e293b; border-radius: 12px; padding: 20px; border-top: 6px solid #fbbf24; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .co-header { text-align: center; background: #1e293b; color: #fbbf24; padding: 8px; border-radius: 6px; margin-bottom: 15px; font-weight: 800; font-size: 16px; }
+        .cf-section { background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+        .cf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
+        label { font-weight: 700; font-size: 12px; color: #475569; }
+        input[type="text"].amt-input { width: 140px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: right; font-weight: 900; font-family: monospace; font-size: 16px; color: #0f172a; }
+        .res-grand { background: #1e293b; color: #fbbf24; text-align: center; padding: 15px; border-radius: 8px; font-size: 28px; font-family: monospace; font-weight: 900; }
+        .btn-add { background: #e2e8f0; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .sub-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-top: 10px; border-bottom: 1px solid #e2e8f0; }
     </style>
 </head>
 <body>
 
 <div class="main-wrapper">
     <div class="sync-header">
-        <div><span class="status-on">● LIVE CLOUD STORAGE ACTIVE</span></div>
-        <div id="sync_msg" style="font-size: 13px; opacity: 0.8;">Status: Waiting for Cloud...</div>
+        <div style="color: #10b981; font-weight: 900;">● LIVE CLOUD STORAGE</div>
+        <div id="sync_msg" style="font-size: 12px; opacity: 0.7;">Connecting...</div>
     </div>
 
     <div class="section-divider"><span>WEEKLY CASH FLOW</span></div>
     <div class="dual-container">
         <div class="co-frame" id="frame_weekly_gyrus">
-            <div class="co-header">GYRUS INDUSTRIES CORP (WEEKLY)</div>
+            <div class="co-header">GYRUS INDUSTRIES CORP</div>
             <div class="cf-section">
-                <div class="cf-row"><label>PERIOD</label>
-                    <input type="date" id="weekly_gyrus_date" class="date-picker" onchange="autoSave()">
-                </div>
+                <div class="cf-row"><label>DATE</label><input type="date" id="weekly_gyrus_date" onchange="autoSave()"></div>
                 <div class="cf-row"><label>CASH IN BANK</label><input type="text" id="weekly_gyrus_bank" class="amt-input" onblur="handleAmtBlur(this, 'weekly_gyrus')"></div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:bold;">ACCOUNTS RECEIVABLE <button class="btn-add" onclick="addRow('weekly_gyrus_ar_list','weekly_gyrus')">+</button></div>
+                <div class="sub-label">Accounts Receivable <button class="btn-add" onclick="addRow('weekly_gyrus_ar_list','weekly_gyrus')">+</button></div>
                 <div id="weekly_gyrus_ar_list"></div>
             </div>
             <div class="cf-section">
                 <div class="cf-row"><label>OPEX</label><input type="text" id="weekly_gyrus_opex" class="amt-input" onblur="handleAmtBlur(this, 'weekly_gyrus')"></div>
-                <div style="font-weight:bold; font-size:11px;">ACCOUNTS PAYABLE (I/T/N) <button class="btn-add" onclick="addRow('weekly_gyrus_ap_list','weekly_gyrus')">+</button></div>
-                <div id="weekly_gyrus_ap_list"></div>
+                <div class="sub-label">Accounts Payable: Import <button class="btn-add" onclick="addRow('weekly_gyrus_ap_i','weekly_gyrus')">+</button></div>
+                <div id="weekly_gyrus_ap_i"></div>
+                <div class="sub-label">Accounts Payable: Trade <button class="btn-add" onclick="addRow('weekly_gyrus_ap_t','weekly_gyrus')">+</button></div>
+                <div id="weekly_gyrus_ap_t"></div>
+                <div class="sub-label">Accounts Payable: Non-Trade <button class="btn-add" onclick="addRow('weekly_gyrus_ap_n','weekly_gyrus')">+</button></div>
+                <div id="weekly_gyrus_ap_n"></div>
             </div>
             <div class="res-grand" id="weekly_gyrus_res_grand">0.00</div>
         </div>
 
         <div class="co-frame" id="frame_weekly_iws">
-            <div class="co-header">IWS-TECHSERV CORP (WEEKLY)</div>
+            <div class="co-header">IWS-TECHSERV CORP</div>
             <div class="cf-section">
-                <div class="cf-row"><label>PERIOD</label>
-                    <input type="date" id="weekly_iws_date" class="date-picker" onchange="autoSave()">
-                </div>
+                <div class="cf-row"><label>DATE</label><input type="date" id="weekly_iws_date" onchange="autoSave()"></div>
                 <div class="cf-row"><label>CASH IN BANK</label><input type="text" id="weekly_iws_bank" class="amt-input" onblur="handleAmtBlur(this, 'weekly_iws')"></div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:bold;">ACCOUNTS RECEIVABLE <button class="btn-add" onclick="addRow('weekly_iws_ar_list','weekly_iws')">+</button></div>
+                <div class="sub-label">Accounts Receivable <button class="btn-add" onclick="addRow('weekly_iws_ar_list','weekly_iws')">+</button></div>
                 <div id="weekly_iws_ar_list"></div>
             </div>
             <div class="cf-section">
                 <div class="cf-row"><label>OPEX</label><input type="text" id="weekly_iws_opex" class="amt-input" onblur="handleAmtBlur(this, 'weekly_iws')"></div>
-                <div style="font-weight:bold; font-size:11px;">ACCOUNTS PAYABLE (I/T/N) <button class="btn-add" onclick="addRow('weekly_iws_ap_list','weekly_iws')">+</button></div>
-                <div id="weekly_iws_ap_list"></div>
+                <div class="sub-label">Accounts Payable: Import <button class="btn-add" onclick="addRow('weekly_iws_ap_i','weekly_iws')">+</button></div>
+                <div id="weekly_iws_ap_i"></div>
+                <div class="sub-label">Accounts Payable: Trade <button class="btn-add" onclick="addRow('weekly_iws_ap_t','weekly_iws')">+</button></div>
+                <div id="weekly_iws_ap_t"></div>
+                <div class="sub-label">Accounts Payable: Non-Trade <button class="btn-add" onclick="addRow('weekly_iws_ap_n','weekly_iws')">+</button></div>
+                <div id="weekly_iws_ap_n"></div>
             </div>
             <div class="res-grand" id="weekly_iws_res_grand">0.00</div>
         </div>
@@ -77,16 +81,13 @@
     const f = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 });
     const parse = (v) => parseFloat(v.toString().replace(/,/g, '')) || 0;
 
-    let supabase;
-    try {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch(e) { console.error("Cloud Error"); }
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     function addRow(containerId, pid, name = "", val = "") {
         const div = document.createElement('div');
         div.className = 'cf-row';
-        div.style.marginTop = "5px";
-        div.innerHTML = `<input type="text" value="${name}" style="flex:1; padding:10px; border:2px solid #cbd5e1; border-radius:6px;" onblur="autoSave()"><input type="text" value="${val}" class="amt-input sub-val" onblur="handleAmtBlur(this, '${pid}')"><button style="color:red; border:none; background:none; cursor:pointer;" onclick="this.parentElement.remove();calculatePortal('${pid}');autoSave();">×</button>`;
+        div.style.marginTop = "4px";
+        div.innerHTML = `<input type="text" value="${name}" placeholder="..." style="flex:1; padding:6px; border:1px solid #cbd5e1; border-radius:4px;" onblur="autoSave()"><input type="text" value="${val}" class="amt-input sub-val" onblur="handleAmtBlur(this, '${pid}')"><button style="color:red; border:none; background:none; cursor:pointer;" onclick="this.parentElement.remove();calculatePortal('${pid}');autoSave();">×</button>`;
         document.getElementById(containerId).appendChild(div);
     }
 
@@ -94,7 +95,10 @@
 
     function calculatePortal(pid) {
         let ar = 0; document.querySelectorAll(`#${pid}_ar_list .sub-val`).forEach(e => ar += parse(e.value));
-        let ap = 0; document.querySelectorAll(`#${pid}_ap_list .sub-val`).forEach(e => ap += parse(e.value));
+        let ap = 0; 
+        [`#${pid}_ap_i`, `#${pid}_ap_t`, `#${pid}_ap_n`].forEach(id => {
+            document.querySelectorAll(`${id} .sub-val`).forEach(e => ap += parse(e.value));
+        });
         let bank = parse(document.getElementById(`${pid}_bank`).value);
         let opex = parse(document.getElementById(`${pid}_opex`).value);
         document.getElementById(`${pid}_res_grand`).innerText = f.format((bank + ar) - (opex + ap));
@@ -108,28 +112,34 @@
                 bank: document.getElementById(`${pid}_bank`).value,
                 opex: document.getElementById(`${pid}_opex`).value,
                 ar: Array.from(document.getElementById(`${pid}_ar_list`).children).map(r => ({n: r.children[0].value, v: r.children[1].value})),
-                ap: Array.from(document.getElementById(`${pid}_ap_list`).children).map(r => ({n: r.children[0].value, v: r.children[1].value}))
+                ap_i: Array.from(document.getElementById(`${pid}_ap_i`).children).map(r => ({n: r.children[0].value, v: r.children[1].value})),
+                ap_t: Array.from(document.getElementById(`${pid}_ap_t`).children).map(r => ({n: r.children[0].value, v: r.children[1].value})),
+                ap_n: Array.from(document.getElementById(`${pid}_ap_n`).children).map(r => ({n: r.children[0].value, v: r.children[1].value}))
             };
         });
         await supabase.from('cashflow_portal').upsert({id: 1, content: data});
     }
 
     async function loadFromCloud() {
-        let { data } = await supabase.from('cashflow_portal').select('content').single();
+        let { data, error } = await supabase.from('cashflow_portal').select('content').single();
         if (data && data.content) {
             Object.keys(data.content).forEach(pid => {
                 const d = data.content[pid];
                 if (!document.getElementById(`${pid}_bank`)) return;
                 document.getElementById(`${pid}_date`).value = d.date || "";
-                document.getElementById(`${pid}_bank`).value = d.bank;
-                document.getElementById(`${pid}_opex`).value = d.opex;
+                document.getElementById(`${pid}_bank`).value = d.bank || "";
+                document.getElementById(`${pid}_opex`).value = d.opex || "";
                 document.getElementById(`${pid}_ar_list`).innerHTML = "";
-                d.ar.forEach(r => addRow(`${pid}_ar_list`, pid, r.n, r.v));
-                document.getElementById(`${pid}_ap_list`).innerHTML = "";
-                d.ap.forEach(r => addRow(`${pid}_ap_list`, pid, r.n, r.v));
+                if(d.ar) d.ar.forEach(r => addRow(`${pid}_ar_list`, pid, r.n, r.v));
+                document.getElementById(`${pid}_ap_i`).innerHTML = "";
+                if(d.ap_i) d.ap_i.forEach(r => addRow(`${pid}_ap_i`, pid, r.n, r.v));
+                document.getElementById(`${pid}_ap_t`).innerHTML = "";
+                if(d.ap_t) d.ap_t.forEach(r => addRow(`${pid}_ap_t`, pid, r.n, r.v));
+                document.getElementById(`${pid}_ap_n`).innerHTML = "";
+                if(d.ap_n) d.ap_n.forEach(r => addRow(`${pid}_ap_n`, pid, r.n, r.v));
                 calculatePortal(pid);
             });
-            document.getElementById('sync_msg').innerText = "Status: Online & Shared";
+            document.getElementById('sync_msg').innerText = "Status: Shared & Live";
         }
     }
 
