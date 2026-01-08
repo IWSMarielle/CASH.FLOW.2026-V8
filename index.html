@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gyrus & IWS - COMPLETE LIVE PORTAL V17.8</title>
+    <title>Gyrus & IWS - COMPLETE LIVE PORTAL V17.9</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; margin: 0; padding: 20px; font-size: 14px; }
@@ -18,6 +18,9 @@
         .cf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
         label { font-weight: 700; font-size: 12px; color: #475569; }
         input[type="text"].amt-input { width: 150px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: right; font-weight: 900; font-family: monospace; font-size: 16px; color: #0f172a; }
+        .subtotal-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-weight: 900; text-align: right; font-size: 15px; }
+        .sub-liquid { background: #dcfce7; color: #166534; border-left: 5px solid #10b981; }
+        .sub-oblig { background: #fee2e2; color: #991b1b; border-left: 5px solid #ef4444; }
         .res-grand { background: #1e293b; color: #fbbf24; text-align: center; padding: 20px; border-radius: 8px; font-size: 32px; font-family: monospace; font-weight: 900; border: 2px solid #fbbf24; }
         .btn-add { background: #1e293b; color: #fbbf24; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
         .sub-label { font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase; margin-top: 15px; padding-bottom: 3px; border-bottom: 2px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
@@ -29,7 +32,7 @@
 <div class="main-wrapper">
     <div class="sync-header">
         <div style="color: #10b981; font-weight: 900; letter-spacing: 1px;">● GYRUS & IWS CLOUD PORTAL</div>
-        <div id="sync_msg" style="font-size: 12px; opacity: 0.8;">Syncing with Supabase...</div>
+        <div id="sync_msg" style="font-size: 12px; opacity: 0.8;">Syncing...</div>
     </div>
 
     <div class="section-divider"><span>WEEKLY CASH FLOW</span></div>
@@ -41,15 +44,14 @@
                 <div class="cf-row"><label>CASH IN BANK</label><input type="text" id="weekly_gyrus_bank" class="amt-input" onblur="handleAmtBlur(this, 'weekly_gyrus')"></div>
                 <div class="sub-label">Accounts Receivable <button class="btn-add" onclick="addRow('weekly_gyrus_ar_list','weekly_gyrus')">+</button></div>
                 <div id="weekly_gyrus_ar_list"></div>
+                <div class="subtotal-box sub-liquid">TOTAL LIQUID: <span id="weekly_gyrus_total_liquid">0.00</span></div>
             </div>
             <div class="cf-section">
                 <div class="cf-row"><label>OPEX</label><input type="text" id="weekly_gyrus_opex" class="amt-input" onblur="handleAmtBlur(this, 'weekly_gyrus')"></div>
-                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('weekly_gyrus_ap_i','weekly_gyrus')">+</button></div>
-                <div id="weekly_gyrus_ap_i"></div>
-                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('weekly_gyrus_ap_t','weekly_gyrus')">+</button></div>
-                <div id="weekly_gyrus_ap_t"></div>
-                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('weekly_gyrus_ap_n','weekly_gyrus')">+</button></div>
-                <div id="weekly_gyrus_ap_n"></div>
+                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('weekly_gyrus_ap_i','weekly_gyrus')">+</button></div><div id="weekly_gyrus_ap_i"></div>
+                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('weekly_gyrus_ap_t','weekly_gyrus')">+</button></div><div id="weekly_gyrus_ap_t"></div>
+                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('weekly_gyrus_ap_n','weekly_gyrus')">+</button></div><div id="weekly_gyrus_ap_n"></div>
+                <div class="subtotal-box sub-oblig">TOTAL OBLIGATIONS: <span id="weekly_gyrus_total_oblig">0.00</span></div>
             </div>
             <div class="res-grand" id="weekly_gyrus_res_grand">0.00</div>
         </div>
@@ -61,15 +63,14 @@
                 <div class="cf-row"><label>CASH IN BANK</label><input type="text" id="weekly_iws_bank" class="amt-input" onblur="handleAmtBlur(this, 'weekly_iws')"></div>
                 <div class="sub-label">Accounts Receivable <button class="btn-add" onclick="addRow('weekly_iws_ar_list','weekly_iws')">+</button></div>
                 <div id="weekly_iws_ar_list"></div>
+                <div class="subtotal-box sub-liquid">TOTAL LIQUID: <span id="weekly_iws_total_liquid">0.00</span></div>
             </div>
             <div class="cf-section">
                 <div class="cf-row"><label>OPEX</label><input type="text" id="weekly_iws_opex" class="amt-input" onblur="handleAmtBlur(this, 'weekly_iws')"></div>
-                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('weekly_iws_ap_i','weekly_iws')">+</button></div>
-                <div id="weekly_iws_ap_i"></div>
-                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('weekly_iws_ap_t','weekly_iws')">+</button></div>
-                <div id="weekly_iws_ap_t"></div>
-                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('weekly_iws_ap_n','weekly_iws')">+</button></div>
-                <div id="weekly_iws_ap_n"></div>
+                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('weekly_iws_ap_i','weekly_iws')">+</button></div><div id="weekly_iws_ap_i"></div>
+                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('weekly_iws_ap_t','weekly_iws')">+</button></div><div id="weekly_iws_ap_t"></div>
+                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('weekly_iws_ap_n','weekly_iws')">+</button></div><div id="weekly_iws_ap_n"></div>
+                <div class="subtotal-box sub-oblig">TOTAL OBLIGATIONS: <span id="weekly_iws_total_oblig">0.00</span></div>
             </div>
             <div class="res-grand" id="weekly_iws_res_grand">0.00</div>
         </div>
@@ -78,43 +79,41 @@
     <div class="section-divider"><span>MONTHLY CASH FLOW</span></div>
     <div class="dual-container">
         <div class="co-frame" id="frame_monthly_gyrus">
-            <div class="co-header">GYRUS INDUSTRIES CORP</div>
+            <div class="co-header">GYRUS INDUSTRIES CORP (MONTHLY)</div>
             <div class="cf-section">
                 <div class="cf-row"><label>MONTH</label><input type="month" id="monthly_gyrus_date" class="date-picker" onchange="autoSave()"></div>
                 <div class="cf-row"><label>CASH IN BANK</label><input type="text" id="monthly_gyrus_bank" class="amt-input" onblur="handleAmtBlur(this, 'monthly_gyrus')"></div>
                 <div class="sub-label">Accounts Receivable <button class="btn-add" onclick="addRow('monthly_gyrus_ar_list','monthly_gyrus')">+</button></div>
                 <div id="monthly_gyrus_ar_list"></div>
+                <div class="subtotal-box sub-liquid">TOTAL LIQUID: <span id="monthly_gyrus_total_liquid">0.00</span></div>
             </div>
             <div class="cf-section">
                 <div class="cf-row"><label>OPEX</label><input type="text" id="monthly_gyrus_opex" class="amt-input" onblur="handleAmtBlur(this, 'monthly_gyrus')"></div>
                 <div class="cf-row"><label style="color:#10b981">SAVINGS</label><input type="text" id="monthly_gyrus_savings" class="amt-input" style="border-color:#10b981" onblur="handleAmtBlur(this, 'monthly_gyrus')"></div>
-                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('monthly_gyrus_ap_i','monthly_gyrus')">+</button></div>
-                <div id="monthly_gyrus_ap_i"></div>
-                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('monthly_gyrus_ap_t','monthly_gyrus')">+</button></div>
-                <div id="monthly_gyrus_ap_t"></div>
-                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('monthly_gyrus_ap_n','monthly_gyrus')">+</button></div>
-                <div id="monthly_gyrus_ap_n"></div>
+                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('monthly_gyrus_ap_i','monthly_gyrus')">+</button></div><div id="monthly_gyrus_ap_i"></div>
+                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('monthly_gyrus_ap_t','monthly_gyrus')">+</button></div><div id="monthly_gyrus_ap_t"></div>
+                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('monthly_gyrus_ap_n','monthly_gyrus')">+</button></div><div id="monthly_gyrus_ap_n"></div>
+                <div class="subtotal-box sub-oblig">TOTAL OBLIGATIONS: <span id="monthly_gyrus_total_oblig">0.00</span></div>
             </div>
             <div class="res-grand" id="monthly_gyrus_res_grand">0.00</div>
         </div>
 
         <div class="co-frame" id="frame_monthly_iws">
-            <div class="co-header">IWS-TECHSERV CORP</div>
+            <div class="co-header">IWS-TECHSERV CORP (MONTHLY)</div>
             <div class="cf-section">
                 <div class="cf-row"><label>MONTH</label><input type="month" id="monthly_iws_date" class="date-picker" onchange="autoSave()"></div>
                 <div class="cf-row"><label>CASH IN BANK</label><input type="text" id="monthly_iws_bank" class="amt-input" onblur="handleAmtBlur(this, 'monthly_iws')"></div>
                 <div class="sub-label">Accounts Receivable <button class="btn-add" onclick="addRow('monthly_iws_ar_list','monthly_iws')">+</button></div>
                 <div id="monthly_iws_ar_list"></div>
+                <div class="subtotal-box sub-liquid">TOTAL LIQUID: <span id="monthly_iws_total_liquid">0.00</span></div>
             </div>
             <div class="cf-section">
                 <div class="cf-row"><label>OPEX</label><input type="text" id="monthly_iws_opex" class="amt-input" onblur="handleAmtBlur(this, 'monthly_iws')"></div>
                 <div class="cf-row"><label style="color:#10b981">SAVINGS</label><input type="text" id="monthly_iws_savings" class="amt-input" style="border-color:#10b981" onblur="handleAmtBlur(this, 'monthly_iws')"></div>
-                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('monthly_iws_ap_i','monthly_iws')">+</button></div>
-                <div id="monthly_iws_ap_i"></div>
-                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('monthly_iws_ap_t','monthly_iws')">+</button></div>
-                <div id="monthly_iws_ap_t"></div>
-                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('monthly_iws_ap_n','monthly_iws')">+</button></div>
-                <div id="monthly_iws_ap_n"></div>
+                <div class="sub-label">AP: Import <button class="btn-add" onclick="addRow('monthly_iws_ap_i','monthly_iws')">+</button></div><div id="monthly_iws_ap_i"></div>
+                <div class="sub-label">AP: Trade <button class="btn-add" onclick="addRow('monthly_iws_ap_t','monthly_iws')">+</button></div><div id="monthly_iws_ap_t"></div>
+                <div class="sub-label">AP: Non-Trade <button class="btn-add" onclick="addRow('monthly_iws_ap_n','monthly_iws')">+</button></div><div id="monthly_iws_ap_n"></div>
+                <div class="subtotal-box sub-oblig">TOTAL OBLIGATIONS: <span id="monthly_iws_total_oblig">0.00</span></div>
             </div>
             <div class="res-grand" id="monthly_iws_res_grand">0.00</div>
         </div>
@@ -126,7 +125,6 @@
     const SUPABASE_KEY = 'sb_publishable_VKG0gzg572lTNPTn4dzTdA_Jhzbw0zD';
     const f = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 });
     const parse = (v) => parseFloat(v.toString().replace(/,/g, '')) || 0;
-
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     function addRow(containerId, pid, name = "", val = "") {
@@ -148,63 +146,3 @@
         let bank = parse(document.getElementById(`${pid}_bank`).value);
         let opex = parse(document.getElementById(`${pid}_opex`).value);
         let savings = document.getElementById(`${pid}_savings`) ? parse(document.getElementById(`${pid}_savings`).value) : 0;
-        
-        document.getElementById(`${pid}_res_grand`).innerText = f.format((bank + ar) - (opex + ap + savings));
-    }
-
-    async function autoSave() {
-        const data = {};
-        ['weekly_gyrus','weekly_iws','monthly_gyrus', 'monthly_iws'].forEach(pid => {
-            const hasSavings = document.getElementById(`${pid}_savings`);
-            data[pid] = {
-                date: document.getElementById(`${pid}_date`).value,
-                bank: document.getElementById(`${pid}_bank`).value,
-                opex: document.getElementById(`${pid}_opex`).value,
-                savings: hasSavings ? hasSavings.value : "0",
-                ar: Array.from(document.getElementById(`${pid}_ar_list`).children).map(r => ({n: r.children[0].value, v: r.children[1].value})),
-                ap_i: Array.from(document.getElementById(`${pid}_ap_i`).children).map(r => ({n: r.children[0].value, v: r.children[1].value})),
-                ap_t: Array.from(document.getElementById(`${pid}_ap_t`).children).map(r => ({n: r.children[0].value, v: r.children[1].value})),
-                ap_n: Array.from(document.getElementById(`${pid}_ap_n`).children).map(r => ({n: r.children[0].value, v: r.children[1].value}))
-            };
-        });
-        await supabase.from('cashflow_portal').upsert({id: 1, content: data});
-    }
-
-    async function loadFromCloud() {
-        let { data, error } = await supabase.from('cashflow_portal').select('content').single();
-        if (data && data.content) {
-            Object.keys(data.content).forEach(pid => {
-                const d = data.content[pid];
-                if (!document.getElementById(`${pid}_bank`)) return;
-                document.getElementById(`${pid}_date`).value = d.date || "";
-                document.getElementById(`${pid}_bank`).value = d.bank || "";
-                document.getElementById(`${pid}_opex`).value = d.opex || "";
-                if(document.getElementById(`${pid}_savings`)) document.getElementById(`${pid}_savings`).value = d.savings || "";
-                
-                document.getElementById(`${pid}_ar_list`).innerHTML = "";
-                if(d.ar) d.ar.forEach(r => addRow(`${pid}_ar_list`, pid, r.n, r.v));
-                
-                document.getElementById(`${pid}_ap_i`).innerHTML = "";
-                if(d.ap_i) d.ap_i.forEach(r => addRow(`${pid}_ap_i`, pid, r.n, r.v));
-                
-                document.getElementById(`${pid}_ap_t`).innerHTML = "";
-                if(d.ap_t) d.ap_t.forEach(r => addRow(`${pid}_ap_t`, pid, r.n, r.v));
-                
-                document.getElementById(`${pid}_ap_n`).innerHTML = "";
-                if(d.ap_n) d.ap_n.forEach(r => addRow(`${pid}_ap_n`, pid, r.n, r.v));
-                
-                calculatePortal(pid);
-            });
-            document.getElementById('sync_msg').innerText = "Status: Connected & Synchronized";
-        }
-    }
-
-    window.onload = () => {
-        loadFromCloud();
-        supabase.channel('any').on('postgres_changes', { event: '*', schema: 'public', table: 'cashflow_portal' }, () => {
-            loadFromCloud();
-        }).subscribe();
-    }
-</script>
-</body>
-</html>
